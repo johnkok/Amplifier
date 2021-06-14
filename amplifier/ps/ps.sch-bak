@@ -1,0 +1,594 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Device:D_Bridge_+-AA D1
+U 1 1 60C1AB10
+P 3700 2800
+F 0 "D1" H 4044 2846 50  0000 L CNN
+F 1 "D_Bridge_+-AA" H 4044 2755 50  0000 L CNN
+F 2 "ADCH-80A+:BRIDGE" H 3700 2800 50  0001 C CNN
+F 3 "~" H 3700 2800 50  0001 C CNN
+	1    3700 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J1
+U 1 1 60C1B09A
+P 2600 2450
+F 0 "J1" H 2708 2631 50  0000 C CNN
+F 1 "44V_AA" H 2708 2540 50  0000 C CNN
+F 2 "ADCH-80A+:TERMINAL_250" H 2600 2450 50  0001 C CNN
+F 3 "~" H 2600 2450 50  0001 C CNN
+	1    2600 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J2
+U 1 1 60C1BD3A
+P 2600 3150
+F 0 "J2" H 2708 3331 50  0000 C CNN
+F 1 "44V_AB" H 2708 3240 50  0000 C CNN
+F 2 "ADCH-80A+:TERMINAL_250" H 2600 3150 50  0001 C CNN
+F 3 "~" H 2600 3150 50  0001 C CNN
+	1    2600 3150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3700 2450 3700 2500
+Wire Wire Line
+	3700 3150 3700 3100
+$Comp
+L pspice:CAP C1
+U 1 1 60C1D453
+P 3050 2800
+F 0 "C1" H 3228 2846 50  0000 L CNN
+F 1 "0.1" H 3228 2755 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder" H 3050 2800 50  0001 C CNN
+F 3 "~" H 3050 2800 50  0001 C CNN
+	1    3050 2800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 2450 3050 2450
+Wire Wire Line
+	3050 3050 3050 3150
+Wire Wire Line
+	2800 3150 3050 3150
+Connection ~ 3050 3150
+Wire Wire Line
+	3050 3150 3700 3150
+Wire Wire Line
+	3050 2550 3050 2450
+Connection ~ 3050 2450
+Wire Wire Line
+	3050 2450 3700 2450
+$Comp
+L Device:CP C3
+U 1 1 60C1FD57
+P 4850 2800
+F 0 "C3" H 4900 2900 50  0000 L CNN
+F 1 "4700uF" H 4900 2700 50  0000 L CNN
+F 2 "ADCH-80A+:CP_Radial_D26.0mm_P12.00mm_SnapIn" H 4888 2650 50  0001 C CNN
+F 3 "~" H 4850 2800 50  0001 C CNN
+	1    4850 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:CP C5
+U 1 1 60C20C83
+P 5700 2800
+F 0 "C5" H 5750 2900 50  0000 L CNN
+F 1 "4700uF" H 5750 2700 50  0000 L CNN
+F 2 "ADCH-80A+:CP_Radial_D26.0mm_P12.00mm_SnapIn" H 5738 2650 50  0001 C CNN
+F 3 "~" H 5700 2800 50  0001 C CNN
+	1    5700 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:CP C7
+U 1 1 60C20FBE
+P 6050 2800
+F 0 "C7" H 6100 2900 50  0000 L CNN
+F 1 "4700uF" H 6100 2700 50  0000 L CNN
+F 2 "ADCH-80A+:CP_Radial_D26.0mm_P12.00mm_SnapIn" H 6088 2650 50  0001 C CNN
+F 3 "~" H 6050 2800 50  0001 C CNN
+	1    6050 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:CP C9
+U 1 1 60C213AE
+P 6400 2800
+F 0 "C9" H 6450 2900 50  0000 L CNN
+F 1 "100uF" H 6450 2700 50  0000 L CNN
+F 2 "Capacitor_SMD:C_Elec_6.3x7.7" H 6438 2650 50  0001 C CNN
+F 3 "~" H 6400 2800 50  0001 C CNN
+	1    6400 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L pspice:CAP C11
+U 1 1 60C21AF4
+P 6800 2800
+F 0 "C11" H 6900 2900 50  0000 L CNN
+F 1 "0.1" H 6900 2700 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder" H 6800 2800 50  0001 C CNN
+F 3 "~" H 6800 2800 50  0001 C CNN
+	1    6800 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R1
+U 1 1 60C25014
+P 5250 2250
+F 0 "R1" V 5350 2250 50  0000 C CNN
+F 1 "R1" V 5250 2250 50  0000 C CNN
+F 2 "Resistor_THT:R_Axial_Power_L25.0mm_W9.0mm_P30.48mm" V 5180 2250 50  0001 C CNN
+F 3 "~" H 5250 2250 50  0001 C CNN
+	1    5250 2250
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	3400 2800 3400 3250
+Wire Wire Line
+	3400 3250 4850 3250
+Wire Wire Line
+	4000 2800 4000 2250
+Wire Wire Line
+	4000 2250 4850 2250
+Wire Wire Line
+	4850 2650 4850 2250
+Connection ~ 4850 2250
+Wire Wire Line
+	4850 2250 5100 2250
+Wire Wire Line
+	4850 2950 4850 3250
+Connection ~ 4850 3250
+Wire Wire Line
+	4850 3250 5700 3250
+Wire Wire Line
+	5400 2250 5700 2250
+Wire Wire Line
+	6800 2250 6800 2550
+Wire Wire Line
+	6800 3050 6800 3250
+Wire Wire Line
+	6400 2950 6400 3250
+Connection ~ 6400 3250
+Wire Wire Line
+	6400 3250 6800 3250
+Wire Wire Line
+	6050 2950 6050 3250
+Connection ~ 6050 3250
+Wire Wire Line
+	6050 3250 6400 3250
+Wire Wire Line
+	5700 2950 5700 3250
+Connection ~ 5700 3250
+Wire Wire Line
+	5700 3250 6050 3250
+Wire Wire Line
+	5700 2650 5700 2250
+Connection ~ 5700 2250
+Wire Wire Line
+	5700 2250 6050 2250
+Wire Wire Line
+	6050 2650 6050 2250
+Connection ~ 6050 2250
+Wire Wire Line
+	6050 2250 6400 2250
+Connection ~ 6400 2250
+Wire Wire Line
+	6400 2250 6800 2250
+Wire Wire Line
+	6400 2250 6400 2650
+$Comp
+L Device:Fuse F1
+U 1 1 60C2FC93
+P 7850 2250
+F 0 "F1" V 7653 2250 50  0000 C CNN
+F 1 "10A" V 7744 2250 50  0000 C CNN
+F 2 "Fuse:Fuseholder_Cylinder-5x20mm_Stelvio-Kontek_PTF78_Horizontal_Open" V 7780 2250 50  0001 C CNN
+F 3 "~" H 7850 2250 50  0001 C CNN
+	1    7850 2250
+	0    1    1    0   
+$EndComp
+Connection ~ 6800 2250
+$Comp
+L Device:R R5
+U 1 1 60C30D5D
+P 8100 3050
+F 0 "R5" H 8170 3096 50  0000 L CNN
+F 1 "22K" H 8170 3005 50  0000 L CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" V 8030 3050 50  0001 C CNN
+F 3 "~" H 8100 3050 50  0001 C CNN
+	1    8100 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:LED D3
+U 1 1 60C326D0
+P 8100 2600
+F 0 "D3" V 8139 2482 50  0000 R CNN
+F 1 "LED" V 8048 2482 50  0000 R CNN
+F 2 "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder" V 8002 2482 50  0001 R CNN
+F 3 "~" H 8100 2600 50  0001 C CNN
+	1    8100 2600
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	8100 3250 8100 3200
+Wire Wire Line
+	8100 2900 8100 2750
+Wire Wire Line
+	8100 2450 8100 2250
+Wire Wire Line
+	8100 2250 8000 2250
+$Comp
+L Connector:Conn_01x01_Male J7
+U 1 1 60C36988
+P 8700 3750
+F 0 "J7" H 8672 3682 50  0000 R CNN
+F 1 "COMMON" H 8672 3773 50  0000 R CNN
+F 2 "ADCH-80A+:TERMINAL_250" H 8700 3750 50  0001 C CNN
+F 3 "~" H 8700 3750 50  0001 C CNN
+	1    8700 3750
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J6
+U 1 1 60C3698E
+P 8700 2250
+F 0 "J6" H 8672 2182 50  0000 R CNN
+F 1 "POS_OUT" H 8672 2273 50  0000 R CNN
+F 2 "ADCH-80A+:TERMINAL_250" H 8700 2250 50  0001 C CNN
+F 3 "~" H 8700 2250 50  0001 C CNN
+	1    8700 2250
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	8100 2250 8500 2250
+Connection ~ 8100 2250
+Wire Wire Line
+	8100 3250 8350 3250
+Wire Wire Line
+	8350 3250 8350 3750
+Wire Wire Line
+	8350 3750 8500 3750
+Connection ~ 8100 3250
+$Comp
+L Device:D_Bridge_+-AA D2
+U 1 1 60C450F1
+P 3750 4800
+F 0 "D2" H 4094 4846 50  0000 L CNN
+F 1 "D_Bridge_+-AA" H 4094 4755 50  0000 L CNN
+F 2 "ADCH-80A+:BRIDGE" H 3750 4800 50  0001 C CNN
+F 3 "~" H 3750 4800 50  0001 C CNN
+	1    3750 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J3
+U 1 1 60C450F7
+P 2650 4450
+F 0 "J3" H 2758 4631 50  0000 C CNN
+F 1 "44V_BA" H 2758 4540 50  0000 C CNN
+F 2 "ADCH-80A+:TERMINAL_250" H 2650 4450 50  0001 C CNN
+F 3 "~" H 2650 4450 50  0001 C CNN
+	1    2650 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J4
+U 1 1 60C450FD
+P 2650 5150
+F 0 "J4" H 2758 5331 50  0000 C CNN
+F 1 "44V_BB" H 2758 5240 50  0000 C CNN
+F 2 "ADCH-80A+:TERMINAL_250" H 2650 5150 50  0001 C CNN
+F 3 "~" H 2650 5150 50  0001 C CNN
+	1    2650 5150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3750 4450 3750 4500
+Wire Wire Line
+	3750 5150 3750 5100
+$Comp
+L pspice:CAP C2
+U 1 1 60C45105
+P 3100 4800
+F 0 "C2" H 3278 4846 50  0000 L CNN
+F 1 "0.1" H 3278 4755 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder" H 3100 4800 50  0001 C CNN
+F 3 "~" H 3100 4800 50  0001 C CNN
+	1    3100 4800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2850 4450 3100 4450
+Wire Wire Line
+	3100 5050 3100 5150
+Wire Wire Line
+	2850 5150 3100 5150
+Connection ~ 3100 5150
+Wire Wire Line
+	3100 5150 3750 5150
+Wire Wire Line
+	3100 4550 3100 4450
+Connection ~ 3100 4450
+Wire Wire Line
+	3100 4450 3750 4450
+$Comp
+L Device:CP C4
+U 1 1 60C45113
+P 4900 4800
+F 0 "C4" H 4950 4900 50  0000 L CNN
+F 1 "4700uF" H 4950 4700 50  0000 L CNN
+F 2 "ADCH-80A+:CP_Radial_D26.0mm_P12.00mm_SnapIn" H 4938 4650 50  0001 C CNN
+F 3 "~" H 4900 4800 50  0001 C CNN
+	1    4900 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:CP C6
+U 1 1 60C45119
+P 5700 4800
+F 0 "C6" H 5750 4900 50  0000 L CNN
+F 1 "4700uF" H 5750 4700 50  0000 L CNN
+F 2 "ADCH-80A+:CP_Radial_D26.0mm_P12.00mm_SnapIn" H 5738 4650 50  0001 C CNN
+F 3 "~" H 5700 4800 50  0001 C CNN
+	1    5700 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:CP C8
+U 1 1 60C4511F
+P 6050 4800
+F 0 "C8" H 6100 4900 50  0000 L CNN
+F 1 "4700uF" H 6100 4700 50  0000 L CNN
+F 2 "ADCH-80A+:CP_Radial_D26.0mm_P12.00mm_SnapIn" H 6088 4650 50  0001 C CNN
+F 3 "~" H 6050 4800 50  0001 C CNN
+	1    6050 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:CP C10
+U 1 1 60C45125
+P 6400 4800
+F 0 "C10" H 6450 4900 50  0000 L CNN
+F 1 "100uF" H 6450 4700 50  0000 L CNN
+F 2 "Capacitor_SMD:C_Elec_6.3x7.7" H 6438 4650 50  0001 C CNN
+F 3 "~" H 6400 4800 50  0001 C CNN
+	1    6400 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L pspice:CAP C12
+U 1 1 60C4512B
+P 6800 4800
+F 0 "C12" H 6900 4900 50  0000 L CNN
+F 1 "0.1" H 6900 4700 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder" H 6800 4800 50  0001 C CNN
+F 3 "~" H 6800 4800 50  0001 C CNN
+	1    6800 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R2
+U 1 1 60C45131
+P 5300 5250
+F 0 "R2" V 5400 5250 50  0000 C CNN
+F 1 "R1" V 5300 5250 50  0000 C CNN
+F 2 "Resistor_THT:R_Axial_Power_L25.0mm_W9.0mm_P30.48mm" V 5230 5250 50  0001 C CNN
+F 3 "~" H 5300 5250 50  0001 C CNN
+	1    5300 5250
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	3450 4800 3450 5250
+Wire Wire Line
+	3450 5250 4900 5250
+Wire Wire Line
+	4050 4800 4050 4250
+Wire Wire Line
+	4050 4250 4900 4250
+Wire Wire Line
+	4900 4650 4900 4250
+Connection ~ 4900 4250
+Wire Wire Line
+	4900 4950 4900 5250
+Wire Wire Line
+	6800 4250 6800 4550
+Wire Wire Line
+	6800 5050 6800 5250
+Wire Wire Line
+	6400 4950 6400 5250
+Connection ~ 6400 5250
+Wire Wire Line
+	6400 5250 6800 5250
+Wire Wire Line
+	6050 4950 6050 5250
+Connection ~ 6050 5250
+Wire Wire Line
+	6050 5250 6400 5250
+Wire Wire Line
+	5700 4950 5700 5250
+Wire Wire Line
+	5700 5250 6050 5250
+Wire Wire Line
+	5700 4650 5700 4250
+Connection ~ 5700 4250
+Wire Wire Line
+	5700 4250 6050 4250
+Wire Wire Line
+	6050 4650 6050 4250
+Connection ~ 6050 4250
+Wire Wire Line
+	6050 4250 6400 4250
+Connection ~ 6400 4250
+Wire Wire Line
+	6400 4250 6800 4250
+Wire Wire Line
+	6400 4250 6400 4650
+$Comp
+L Device:Fuse F2
+U 1 1 60C45156
+P 7850 5250
+F 0 "F2" V 7653 5250 50  0000 C CNN
+F 1 "10A" V 7744 5250 50  0000 C CNN
+F 2 "Fuse:Fuseholder_Cylinder-5x20mm_Stelvio-Kontek_PTF78_Horizontal_Open" V 7780 5250 50  0001 C CNN
+F 3 "~" H 7850 5250 50  0001 C CNN
+	1    7850 5250
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R6
+U 1 1 60C4515E
+P 8100 5050
+F 0 "R6" H 8170 5096 50  0000 L CNN
+F 1 "22K" H 8170 5005 50  0000 L CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" V 8030 5050 50  0001 C CNN
+F 3 "~" H 8100 5050 50  0001 C CNN
+	1    8100 5050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:LED D4
+U 1 1 60C45164
+P 8100 4600
+F 0 "D4" V 8139 4482 50  0000 R CNN
+F 1 "LED" V 8048 4482 50  0000 R CNN
+F 2 "LED_SMD:LED_0603_1608Metric_Pad1.05x0.95mm_HandSolder" H 8100 4600 50  0001 C CNN
+F 3 "~" H 8100 4600 50  0001 C CNN
+	1    8100 4600
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	8100 5250 8100 5200
+Wire Wire Line
+	8100 4900 8100 4750
+Wire Wire Line
+	8100 4450 8100 4250
+Wire Wire Line
+	8100 5250 8350 5250
+Wire Wire Line
+	5450 5250 5700 5250
+Connection ~ 5700 5250
+Wire Wire Line
+	5150 5250 4900 5250
+Connection ~ 4900 5250
+Wire Wire Line
+	4900 4250 5700 4250
+Wire Wire Line
+	8350 3750 8350 4250
+Wire Wire Line
+	8100 4250 8350 4250
+Connection ~ 8100 4250
+Connection ~ 6800 5250
+Wire Wire Line
+	8000 5250 8100 5250
+Connection ~ 8100 5250
+$Comp
+L Connector:Conn_01x01_Male J5
+U 1 1 60C78880
+P 8550 5250
+F 0 "J5" H 8522 5182 50  0000 R CNN
+F 1 "NEG_OUT" H 8522 5273 50  0000 R CNN
+F 2 "ADCH-80A+:TERMINAL_250" H 8550 5250 50  0001 C CNN
+F 3 "~" H 8550 5250 50  0001 C CNN
+	1    8550 5250
+	-1   0    0    1   
+$EndComp
+Connection ~ 8350 3750
+$Comp
+L Device:R R3
+U 1 1 60C957A6
+P 7200 2450
+F 0 "R3" V 7300 2450 50  0000 C CNN
+F 1 "1R" V 7200 2450 50  0000 C CNN
+F 2 "Resistor_SMD:R_2512_6332Metric_Pad1.40x3.35mm_HandSolder" V 7130 2450 50  0001 C CNN
+F 3 "~" H 7200 2450 50  0001 C CNN
+	1    7200 2450
+	-1   0    0    1   
+$EndComp
+$Comp
+L pspice:CAP C13
+U 1 1 60C97E2F
+P 7200 2900
+F 0 "C13" H 7300 3000 50  0000 L CNN
+F 1 "0.1" H 7300 2800 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder" H 7200 2900 50  0001 C CNN
+F 3 "~" H 7200 2900 50  0001 C CNN
+	1    7200 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R4
+U 1 1 60C9DBC7
+P 7200 4450
+F 0 "R4" V 7300 4450 50  0000 C CNN
+F 1 "1R" V 7200 4450 50  0000 C CNN
+F 2 "Resistor_SMD:R_2512_6332Metric_Pad1.40x3.35mm_HandSolder" V 7130 4450 50  0001 C CNN
+F 3 "~" H 7200 4450 50  0001 C CNN
+	1    7200 4450
+	-1   0    0    1   
+$EndComp
+$Comp
+L pspice:CAP C14
+U 1 1 60C9DBCD
+P 7200 4900
+F 0 "C14" H 7300 5000 50  0000 L CNN
+F 1 "0.1" H 7300 4800 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder" H 7200 4900 50  0001 C CNN
+F 3 "~" H 7200 4900 50  0001 C CNN
+	1    7200 4900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6800 4250 7200 4250
+Connection ~ 6800 4250
+Wire Wire Line
+	7200 4300 7200 4250
+Connection ~ 7200 4250
+Wire Wire Line
+	7200 4250 8100 4250
+Wire Wire Line
+	6800 5250 7200 5250
+Wire Wire Line
+	7200 5150 7200 5250
+Connection ~ 7200 5250
+Wire Wire Line
+	7200 5250 7700 5250
+Wire Wire Line
+	6800 3250 7200 3250
+Connection ~ 6800 3250
+Wire Wire Line
+	7200 3150 7200 3250
+Connection ~ 7200 3250
+Wire Wire Line
+	7200 3250 8100 3250
+Wire Wire Line
+	6800 2250 7200 2250
+Wire Wire Line
+	7200 2300 7200 2250
+Connection ~ 7200 2250
+Wire Wire Line
+	7200 2250 7700 2250
+Wire Wire Line
+	7200 2650 7200 2600
+Wire Wire Line
+	7200 4600 7200 4650
+$EndSCHEMATC

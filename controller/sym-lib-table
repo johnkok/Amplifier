@@ -1,0 +1,5 @@
+(sym_lib_table
+  (lib (name adau)(type Legacy)(uri /opt/Ampilifier/controller/lib/2021-06-07_16-25-21.lib)(options "")(descr ""))
+  (lib (name ad1937)(type Legacy)(uri /opt/Ampilifier/controller/lib/2021-06-07_17-29-32.lib)(options "")(descr ""))
+  (lib (name ada4897)(type Legacy)(uri /opt/Ampilifier/controller/lib/2021-06-07_17-42-09.lib)(options "")(descr ""))
+)

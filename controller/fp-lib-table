@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name adau)(type KiCad)(uri /opt/Ampilifier/controller/lib/footprints.pretty)(options "")(descr ""))
+)
