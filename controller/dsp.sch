@@ -1878,4 +1878,45 @@ Wire Wire Line
 	6600 9100 6850 9100
 Connection ~ 6600 9100
 Connection ~ 6600 8700
+$Comp
+L Device:Net-Tie_2 NT?
+U 1 1 614731D0
+P 12950 2800
+F 0 "NT?" V 12996 2756 50  0000 R CNN
+F 1 "NT1" V 12905 2756 50  0000 R CNN
+F 2 "" H 12950 2800 50  0001 C CNN
+F 3 "~" H 12950 2800 50  0001 C CNN
+	1    12950 2800
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	13300 3000 12950 3000
+Connection ~ 13300 3000
+Wire Wire Line
+	13300 2600 12950 2600
+Connection ~ 13300 2600
+Wire Wire Line
+	12950 2700 12950 2600
+Wire Wire Line
+	12950 2900 12950 3000
+$Comp
+L Device:C C?
+U 1 1 61572478
+P 12950 3250
+AR Path="/60CBC38F/61572478" Ref="C?"  Part="1" 
+AR Path="/60BF255D/61572478" Ref="C?"  Part="1" 
+F 0 "C?" V 12900 3350 50  0000 C CNN
+F 1 "0.1" V 13000 3400 50  0000 C CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder" H 12988 3100 50  0001 C CNN
+F 3 "~" H 12950 3250 50  0001 C CNN
+	1    12950 3250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	12950 3000 12950 3100
+Connection ~ 12950 3000
+Wire Wire Line
+	12950 3500 13450 3500
+Wire Wire Line
+	12950 3400 12950 3500
 $EndSCHEMATC

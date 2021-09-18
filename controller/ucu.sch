@@ -3566,4 +3566,8 @@ Text Label 14150 3650 0    50   ~ 0
 REL_PWR
 Wire Wire Line
 	14150 3650 14800 3650
+Text Label 2250 6650 0    50   ~ 0
+PON
+Wire Wire Line
+	2250 6650 2750 6650
 $EndSCHEMATC
