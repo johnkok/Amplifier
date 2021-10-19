@@ -14,17 +14,6 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L Device:Q_TRIAC_A1A2G D3
-U 1 1 60BF28E5
-P 2850 1750
-F 0 "D3" H 2900 1950 50  0000 L CNN
-F 1 "MAC223A8X" H 2400 1900 50  0000 L CNN
-F 2 "Package_TO_SOT_THT:TO-220-3_Vertical" V 2925 1775 50  0001 C CNN
-F 3 "~" V 2850 1750 50  0001 C CNN
-	1    2850 1750
-	-1   0    0    -1  
-$EndComp
-$Comp
 L Connector:Conn_01x01_Male J10
 U 1 1 60BF7AF5
 P 1250 3050
@@ -160,41 +149,20 @@ F 3 "~" H 2400 2100 50  0001 C CNN
 	1    2400 2100
 	1    0    0    -1  
 $EndComp
-Connection ~ 2850 1500
-Wire Wire Line
-	2850 1500 2850 1600
 Wire Wire Line
 	2400 1850 2400 1950
 Wire Wire Line
 	2400 2250 2400 2300
 Wire Wire Line
-	2850 1900 2850 2300
-Wire Wire Line
 	2850 3050 2850 2300
 Wire Wire Line
 	1450 3050 2850 3050
-Connection ~ 2850 2300
 Wire Wire Line
 	2400 2300 2850 2300
 Wire Wire Line
 	2400 1500 2400 1550
 Wire Wire Line
 	2400 1500 2850 1500
-$Comp
-L Device:R R26
-U 1 1 60C0976D
-P 3350 1500
-F 0 "R26" V 3143 1500 50  0000 C CNN
-F 1 "56/2W" V 3234 1500 50  0000 C CNN
-F 2 "Resistor_THT:R_Axial_DIN0414_L11.9mm_D4.5mm_P15.24mm_Horizontal" V 3280 1500 50  0001 C CNN
-F 3 "~" H 3350 1500 50  0001 C CNN
-	1    3350 1500
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	2850 1500 3200 1500
-Wire Wire Line
-	4400 1700 4800 1700
 $Comp
 L Connector:Conn_01x01_Male J12
 U 1 1 60C38E9F
@@ -291,7 +259,7 @@ F 3 "" H 9500 3250 50  0001 C CNN
 	1    9500 3250
 	1    0    0    -1  
 $EndComp
-Text HLabel 4800 1700 2    50   Input ~ 0
+Text HLabel 4050 2350 3    50   Input ~ 0
 MAIN_TRF_CTRL
 $Comp
 L Device:D_Bridge_+-AA D2
@@ -692,21 +660,6 @@ Wire Wire Line
 Connection ~ 10650 4950
 Wire Wire Line
 	9500 4950 9650 4950
-$Comp
-L power:+3.3V #PWR0266
-U 1 1 635ACB53
-P 4600 1450
-F 0 "#PWR0266" H 4600 1300 50  0001 C CNN
-F 1 "+3.3V" H 4615 1623 50  0000 C CNN
-F 2 "" H 4600 1450 50  0001 C CNN
-F 3 "" H 4600 1450 50  0001 C CNN
-	1    4600 1450
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4600 1500 4600 1450
-Wire Wire Line
-	4400 1500 4600 1500
 $Comp
 L power:GND #PWR0135
 U 1 1 60E0C973
@@ -1266,41 +1219,177 @@ Wire Wire Line
 	4600 6100 4500 6100
 Wire Wire Line
 	4500 6100 4500 6250
+Text HLabel 5400 2350 3    50   Input ~ 0
+MAIN_TRF_SS
 $Comp
-L Relay_SolidState:MOC3083M U6
-U 1 1 614D1E72
-P 4100 1600
-F 0 "U6" H 4100 1925 50  0000 C CNN
-F 1 "MOC3083M" H 4100 1834 50  0000 C CNN
-F 2 "" H 3900 1400 50  0001 L CIN
-F 3 "https://www.onsemi.com/pub/Collateral/MOC3083M-D.PDF" H 4100 1600 50  0001 L CNN
-	1    4100 1600
-	-1   0    0    -1  
+L Relay:G2RL-2-DC12 RL1
+U 1 1 616FA480
+P 3650 1900
+F 0 "RL1" H 4050 1300 50  0000 R CNN
+F 1 "G2RL-2-DC12" H 4050 1400 50  0000 R CNN
+F 2 "Relay_THT:Relay_DPDT_Omron_G2RL" H 4300 1850 50  0001 L CNN
+F 3 "https://omronfs.omron.com/en_US/ecb/products/pdf/en-g2rl.pdf" H 3650 1900 50  0001 C CNN
+	1    3650 1900
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2850 2300 3150 2300
+Wire Wire Line
+	3150 2300 3150 2200
+Connection ~ 2850 2300
+Wire Wire Line
+	3150 2300 3550 2300
+Wire Wire Line
+	3550 2300 3550 2200
+Connection ~ 3150 2300
+Wire Wire Line
+	2850 1500 3250 1500
+Wire Wire Line
+	3650 1500 3650 1600
+Connection ~ 2850 1500
+Wire Wire Line
+	3250 1600 3250 1500
+Connection ~ 3250 1500
+Wire Wire Line
+	3250 1500 3650 1500
+$Comp
+L Relay:G2RL-2-DC12 RL2
+U 1 1 617224A5
+P 5000 1900
+F 0 "RL2" H 4370 1854 50  0000 R CNN
+F 1 "G2RL-2-DC12" H 4370 1945 50  0000 R CNN
+F 2 "Relay_THT:Relay_DPDT_Omron_G2RL" H 5650 1850 50  0001 L CNN
+F 3 "https://omronfs.omron.com/en_US/ecb/products/pdf/en-g2rl.pdf" H 5000 1900 50  0001 C CNN
+	1    5000 1900
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3650 1500 4600 1500
+Wire Wire Line
+	5000 1500 5000 1600
+Connection ~ 3650 1500
+Wire Wire Line
+	4600 1600 4600 1500
+Connection ~ 4600 1500
+Wire Wire Line
+	4600 1500 5000 1500
+$Comp
+L Device:R R26
+U 1 1 61740C83
+P 4300 2300
+F 0 "R26" V 4200 2300 50  0000 C CNN
+F 1 "47R/15W" V 4400 2300 50  0000 C CNN
+F 2 "Resistor_THT:R_Radial_Power_L13.0mm_W9.0mm_P5.00mm" V 4230 2300 50  0001 C CNN
+F 3 "~" H 4300 2300 50  0001 C CNN
+	1    4300 2300
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3550 2300 4150 2300
+Connection ~ 3550 2300
+Wire Wire Line
+	4900 2300 4900 2200
+Wire Wire Line
+	4450 2300 4500 2300
+Wire Wire Line
+	4500 2200 4500 2300
+Connection ~ 4500 2300
+Wire Wire Line
+	4500 2300 4900 2300
+Wire Wire Line
+	5400 2350 5400 2250
+Wire Wire Line
+	4050 2350 4050 2250
+$Comp
+L power:+12V #PWR0207
+U 1 1 617973F5
+P 5400 1400
+F 0 "#PWR0207" H 5400 1250 50  0001 C CNN
+F 1 "+12V" H 5415 1573 50  0000 C CNN
+F 2 "" H 5400 1400 50  0001 C CNN
+F 3 "" H 5400 1400 50  0001 C CNN
+	1    5400 1400
+	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R?
-U 1 1 61538D39
-P 3300 2100
-F 0 "R?" V 3093 2100 50  0000 C CNN
-F 1 "330/1W" V 3184 2100 50  0000 C CNN
-F 2 "Resistor_THT:R_Axial_DIN0414_L11.9mm_D4.5mm_P15.24mm_Horizontal" V 3230 2100 50  0001 C CNN
-F 3 "~" H 3300 2100 50  0001 C CNN
-	1    3300 2100
+L power:+12V #PWR0266
+U 1 1 6179DD42
+P 4050 1400
+F 0 "#PWR0266" H 4050 1250 50  0001 C CNN
+F 1 "+12V" H 4065 1573 50  0000 C CNN
+F 2 "" H 4050 1400 50  0001 C CNN
+F 3 "" H 4050 1400 50  0001 C CNN
+	1    4050 1400
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	3000 1850 3300 1850
+	4050 1600 4050 1400
 Wire Wire Line
-	3500 1500 3800 1500
+	5400 1400 5400 1600
+$Comp
+L Device:D D?
+U 1 1 618034AE
+P 3900 2500
+AR Path="/60BF25B5/618034AE" Ref="D?"  Part="1" 
+AR Path="/60BF2601/618034AE" Ref="D3"  Part="1" 
+F 0 "D3" H 3900 2300 50  0000 L CNN
+F 1 "1N4148" H 3800 2400 50  0000 L CNN
+F 2 "Diode_SMD:D_SOD-323_HandSoldering" H 3900 2500 50  0001 C CNN
+F 3 "~" H 3900 2500 50  0001 C CNN
+	1    3900 2500
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:D D?
+U 1 1 61809CDA
+P 5200 2500
+AR Path="/60BF25B5/61809CDA" Ref="D?"  Part="1" 
+AR Path="/60BF2601/61809CDA" Ref="D4"  Part="1" 
+F 0 "D4" H 5200 2300 50  0000 L CNN
+F 1 "1N4148" H 5100 2400 50  0000 L CNN
+F 2 "Diode_SMD:D_SOD-323_HandSoldering" H 5200 2500 50  0001 C CNN
+F 3 "~" H 5200 2500 50  0001 C CNN
+	1    5200 2500
+	0    1    1    0   
+$EndComp
 Wire Wire Line
-	2850 2300 3300 2300
+	3900 2350 3900 2250
 Wire Wire Line
-	3300 2300 3300 2250
+	3900 2250 4050 2250
+Connection ~ 4050 2250
 Wire Wire Line
-	3300 1950 3300 1850
-Connection ~ 3300 1850
+	4050 2250 4050 2200
 Wire Wire Line
-	3300 1850 3300 1700
+	5200 2350 5200 2250
 Wire Wire Line
-	3300 1700 3800 1700
+	5200 2250 5400 2250
+Connection ~ 5400 2250
+Wire Wire Line
+	5400 2250 5400 2200
+$Comp
+L power:+12V #PWR0273
+U 1 1 6181EE52
+P 5200 2750
+F 0 "#PWR0273" H 5200 2600 50  0001 C CNN
+F 1 "+12V" H 5215 2923 50  0000 C CNN
+F 2 "" H 5200 2750 50  0001 C CNN
+F 3 "" H 5200 2750 50  0001 C CNN
+	1    5200 2750
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	5200 2650 5200 2750
+$Comp
+L power:+12V #PWR0274
+U 1 1 6182ED18
+P 3900 2750
+F 0 "#PWR0274" H 3900 2600 50  0001 C CNN
+F 1 "+12V" H 3915 2923 50  0000 C CNN
+F 2 "" H 3900 2750 50  0001 C CNN
+F 3 "" H 3900 2750 50  0001 C CNN
+	1    3900 2750
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3900 2650 3900 2750
 $EndSCHEMATC
