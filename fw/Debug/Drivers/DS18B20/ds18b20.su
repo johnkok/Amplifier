@@ -1,0 +1,13 @@
+ds18b20.c:20:6:Ds18b20_ManualConvert	8	static
+ds18b20.c:62:6:sensorATaskEntry	32	static
+ds18b20.c:129:9:DS18B20_Start	16	static
+ds18b20.c:146:6:DS18B20_StartAll	16	static
+ds18b20.c:156:6:DS18B20_Read	56	static
+ds18b20.c:261:9:DS18B20_GetResolution	24	static
+ds18b20.c:288:9:DS18B20_SetResolution	32	static
+ds18b20.c:353:9:DS18B20_Is	16	static
+ds18b20.c:362:9:DS18B20_SetAlarmLowTemperature	32	static
+ds18b20.c:413:9:DS18B20_SetAlarmHighTemperature	32	static
+ds18b20.c:464:9:DS18B20_DisableAlarmTemperature	24	static
+ds18b20.c:510:9:DS18B20_AlarmSearch	16	static
+ds18b20.c:516:9:DS18B20_AllDone	16	static

@@ -1,3 +1,0 @@
-display.c:17:9:voltage2percent	16	static
-display.c:35:6:drawPoint	16	static
-display.c:65:6:StartDisplayTask	32	static
