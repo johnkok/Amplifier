@@ -199,6 +199,8 @@ VCC          3.3V         Positive power supply
 #define ILI9341_COLOR_MAGENTA		0xA254
 #define ILI9341_COLOR_GRAY			0x7BEF
 #define ILI9341_COLOR_BROWN			0xBBCA
+#define ILI9341_COLOR_YELLOW2		0xF2E6
+#define ILI9341_COLOR_YELLOW3		0xF5C0
 
 /* Transparent background, only for strings and chars */
 #define ILI9341_TRANSPARENT			0x80000000

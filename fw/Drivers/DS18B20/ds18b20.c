@@ -2,6 +2,7 @@
 #include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
 
+extern osMessageQueueId_t displayQueueHandle;
 
 //###################################################################################
 Ds18b20Sensor_t	ds18b20[_DS18B20_MAX_SENSORS];
@@ -62,6 +63,7 @@ bool	Ds18b20_ManualConvert(void)
 void sensorATaskEntry(void const * argument)
 {
 	uint8_t	Ds18b20TryToFind=5;
+	uint16_t display_event;
 	do
 	{
 		OneWire_Init(&OneWire,_DS18B20_GPIO ,_DS18B20_PIN);
@@ -114,6 +116,8 @@ void sensorATaskEntry(void const * argument)
 				Ds18b20Delay(1000);
 				ds18b20[i].DataIsValid = DS18B20_Read(&OneWire, ds18b20[i].Address, &ds18b20[i].Temperature);
 			}
+            display_event = 0x4000 + (int16_t)(ds18b20[0].Temperature * 10);
+		    osMessageQueuePut(displayQueueHandle, &display_event, 10, 0);
 		}
 		else
 		{

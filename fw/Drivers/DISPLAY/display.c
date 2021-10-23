@@ -1,6 +1,5 @@
 #include "cmsis_os.h"
 #include "cmsis_os2.h"
-#include "images/images.h"
 #include "main.h"
 #include "stm32f4xx_hal.h"
 #include "tm_stm32f4_ili9341.h"
@@ -8,12 +7,13 @@
 
 extern osMessageQueueId_t displayQueueHandle;
 
-//extern status_t status;
-
 osEvent event;
 #define BAT_1_X_OFFSET 16
 #define BAT_2_X_OFFSET 122
 #define BAT_3_X_OFFSET 229
+
+#define X_PIX 320
+#define Y_PIX 240
 
 uint8_t voltage2percent(uint16_t voltage) {
 
@@ -33,76 +33,62 @@ uint8_t voltage2percent(uint16_t voltage) {
 	return voltage / 18;
 }
 
-void drawPoint(uint16_t X, uint16_t Y)
-{
-
-	/* Bridge pressed */
-/*
-	if (X > 80 && X < 130 &&
-		Y > 45 && Y < 75) {
-		if (status.bridge) {
-			status.bridge = 0;
-			TM_ILI9341_DrawImage(86, 50, 40, 20, BOFF);
-		}
-		else {
-			status.bridge = 1;
-			TM_ILI9341_DrawImage(86, 50, 40, 20, BON);
-		}
-	}
-	else if ( 	X > 0 && X < 40 &&
-				Y > 50 && Y < 85) {
-		   TM_ILI9341_DrawFilledRectangle(0, 55, 36, 85, ILI9341_COLOR_BLACK);
-	}
-	else if ( 	X > 45 && X < 75 &&
-				Y > 200 && Y < 240) {
-		   TM_ILI9341_DrawFilledRectangle(50, 204, 86, 234, ILI9341_COLOR_BLACK);
-	}
-	else
-		TM_ILI9341_DrawCircle(X, Y, 10, ILI9341_COLOR_BLUE);
-*/
-}
-
-
 void displayTaskEntry(void const * argument)
 {
-    TM_ILI9341_Init();
+	TM_ILI9341_Init();
 
-    /* Cross */
-    TM_ILI9341_DrawFilledRectangle(0, 120, 320, 121, ILI9341_COLOR_WHITE);
-    TM_ILI9341_DrawFilledRectangle(106, 0, 107, 240*2, ILI9341_COLOR_WHITE);
-    TM_ILI9341_DrawFilledRectangle(213, 0, 214, 240*2, ILI9341_COLOR_WHITE);
-
-    /* Texts */
-    TM_ILI9341_Puts(20,0,"Engine", &TM_Font_11x18, ILI9341_COLOR_WHITE, ILI9341_COLOR_BLACK);
-    TM_ILI9341_Puts(145,00,"Acc.", &TM_Font_11x18, ILI9341_COLOR_WHITE, ILI9341_COLOR_BLACK);
-    TM_ILI9341_Puts(245,00,"Solar", &TM_Font_11x18, ILI9341_COLOR_WHITE, ILI9341_COLOR_BLACK);
-
-    TM_ILI9341_Puts(20,122,"Engine", &TM_Font_11x18, ILI9341_COLOR_WHITE, ILI9341_COLOR_BLACK);
-    TM_ILI9341_Puts(122,122,"Exhaust", &TM_Font_11x18, ILI9341_COLOR_WHITE, ILI9341_COLOR_BLACK);
-    TM_ILI9341_Puts(235,122,"Status", &TM_Font_11x18, ILI9341_COLOR_WHITE, ILI9341_COLOR_BLACK);
-
-    /* Batteries */
-    TM_ILI9341_DrawImage(6, 88, 95, 30, BAT);
-    TM_ILI9341_DrawImage(112, 88, 95, 30, BAT);
-    TM_ILI9341_DrawImage(219, 88, 95, 30, BAT);
-
-    /* Thermometers */
-    TM_ILI9341_DrawImage(1, 145, 30, 90, THERM);
-    TM_ILI9341_DrawImage(113, 145, 30, 90, THERM);
-    TM_ILI9341_Puts(220,180,"Room temp:", &TM_Font_7x10, ILI9341_COLOR_YELLOW, ILI9341_COLOR_BLACK);
-    TM_ILI9341_Puts(220,147,"Bridge:", &TM_Font_7x10, ILI9341_COLOR_YELLOW, ILI9341_COLOR_BLACK);
-
-   for(;;)
-   {
+	for(;;)	{
 	   uint32_t data;
 
-	   osMessageQueueGet (displayQueueHandle, &data, NULL, 0);
+	   if (osMessageQueueGet (displayQueueHandle, &data, NULL, 0) == osOK) {
+           if (data == 0) {  // Power-down
+		        TM_ILI9341_Init();
+		   } else if (data == 0x0001) { // Welcome screen
+			    TM_ILI9341_Fill(ILI9341_COLOR_BLACK);
+				TM_ILI9341_Puts((X_PIX/2) - (16 * 11 / 2), (Y_PIX/2) - (26 /2),"www.ioko.eu", &TM_Font_16x26, ILI9341_COLOR_WHITE, ILI9341_COLOR_BLACK);
+		   } else if (data < 0x0010) { // power-up progress dots
+			   TM_ILI9341_DrawCircle(75 + (20 * (data - 1)), 150, 5, ILI9341_COLOR_WHITE);
+			   TM_ILI9341_DrawCircle(75 + (20 * (data - 1)), 150, 4, ILI9341_COLOR_WHITE);
+			   TM_ILI9341_DrawCircle(75 + (20 * (data - 1)), 150, 3, ILI9341_COLOR_WHITE);
+		   } else if (data == 0x0011) { // power-up ok
+			   TM_ILI9341_DrawImage(40, 0, 280, 240, 0);
 
-	   if (data){
-           drawPoint(data & 0xFFFF, (data & 0xFFFF0000) >> 16);
-	   }
-	   else {
+			   TM_ILI9341_Puts((X_PIX/2) - 40, (Y_PIX/2) - 15, "Temp:  26.3 C", &TM_Font_7x10, ILI9341_COLOR_WHITE, ILI9341_COLOR_YELLOW3);
+			   TM_ILI9341_Puts((X_PIX/2) - 40, (Y_PIX/2) - 5,  "Fan:   365  RPM", &TM_Font_7x10, ILI9341_COLOR_WHITE, ILI9341_COLOR_YELLOW3);
+			   TM_ILI9341_Puts((X_PIX/2) - 40, (Y_PIX/2) + 5,  "Out:         ", &TM_Font_7x10, ILI9341_COLOR_WHITE, ILI9341_COLOR_YELLOW3);
+			   TM_ILI9341_Puts((X_PIX/2) - 10,  (Y_PIX/2) + 7,  "* * * * * *", &TM_Font_7x10, ILI9341_COLOR_GREEN2, ILI9341_COLOR_YELLOW3);
 
+			   TM_ILI9341_DrawCircle((X_PIX/2) - 80, (Y_PIX/2) - 30, 5, ILI9341_COLOR_GREEN);
+			   TM_ILI9341_DrawCircle((X_PIX/2) - 80, (Y_PIX/2) - 30, 4, ILI9341_COLOR_GREEN);
+			   TM_ILI9341_DrawCircle((X_PIX/2) - 80, (Y_PIX/2) - 30, 3, ILI9341_COLOR_GREEN);
+			   TM_ILI9341_DrawCircle((X_PIX/2) - 80, (Y_PIX/2) - 30, 2, ILI9341_COLOR_GREEN);
+
+			   TM_ILI9341_DrawCircle((X_PIX/2) - 80, (Y_PIX/2) + 30, 5, ILI9341_COLOR_GREEN);
+			   TM_ILI9341_DrawCircle((X_PIX/2) - 80, (Y_PIX/2) + 30, 4, ILI9341_COLOR_GREEN);
+			   TM_ILI9341_DrawCircle((X_PIX/2) - 80, (Y_PIX/2) + 30, 3, ILI9341_COLOR_GREEN);
+			   TM_ILI9341_DrawCircle((X_PIX/2) - 80, (Y_PIX/2) + 30, 2, ILI9341_COLOR_GREEN);
+
+		   } else if (data < 0x0100) { // Reserved
+
+		   } else if (data < 0x0200) { // Left VU
+
+		   } else if (data < 0x0300) { // Right VU
+
+		   } else if (data < 0x2000) { // Reserved
+
+		   } else if (data < 0x4000) { // Temp L
+
+		   } else if (data < 0x6000) { // Temp R
+
+		   } else if (data < 0x8000) { // RPM L
+
+		   } else if (data < 0xA000) { // RPM R
+
+		   } else if (data < 0xC000) { // Reserved
+
+		   } else if (data < 0xE000) { // Reserved
+
+		   }
 	   }
    }
 }

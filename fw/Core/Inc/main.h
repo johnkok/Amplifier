@@ -128,7 +128,16 @@ void Error_Handler(void);
 #define CH4_OUT_Pin GPIO_PIN_1
 #define CH4_OUT_GPIO_Port GPIOE
 /* USER CODE BEGIN Private defines */
-
+typedef enum {
+	STAND_BY    =  0,
+	ON_REQUEST  =  1,
+	SS_REQUEST  =  2,
+	SS_DELAY    =  3,
+	XFR_ON      =  4,
+	ON          =  5,
+	SB_REQUEST  =  6,
+	SB_PERFORM  =  7
+} eStates;
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

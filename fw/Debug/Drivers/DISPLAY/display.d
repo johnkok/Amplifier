@@ -11,8 +11,7 @@ Drivers/DISPLAY/display.o: ../Drivers/DISPLAY/display.c \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
- ../Drivers/DISPLAY/images/images.h \
- ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
+ ../Core/Inc/main.h ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h \
@@ -44,7 +43,7 @@ Drivers/DISPLAY/display.o: ../Drivers/DISPLAY/display.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- ../Core/Inc/main.h ../Drivers/DISPLAY/tm_stm32f4_ili9341.h \
+ ../Drivers/DISPLAY/tm_stm32f4_ili9341.h \
  ../Drivers/DISPLAY/tm_stm32f4_fonts.h
 
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h:
@@ -71,7 +70,7 @@ Drivers/DISPLAY/display.o: ../Drivers/DISPLAY/display.c \
 
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h:
 
-../Drivers/DISPLAY/images/images.h:
+../Core/Inc/main.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 
@@ -136,8 +135,6 @@ Drivers/DISPLAY/display.o: ../Drivers/DISPLAY/display.c \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
-
-../Core/Inc/main.h:
 
 ../Drivers/DISPLAY/tm_stm32f4_ili9341.h:
 

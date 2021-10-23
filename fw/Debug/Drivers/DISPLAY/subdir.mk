@@ -7,17 +7,20 @@
 C_SRCS += \
 ../Drivers/DISPLAY/display.c \
 ../Drivers/DISPLAY/tm_stm32f4_fonts.c \
-../Drivers/DISPLAY/tm_stm32f4_ili9341.c 
+../Drivers/DISPLAY/tm_stm32f4_ili9341.c \
+../Drivers/DISPLAY/vu.c 
 
 OBJS += \
 ./Drivers/DISPLAY/display.o \
 ./Drivers/DISPLAY/tm_stm32f4_fonts.o \
-./Drivers/DISPLAY/tm_stm32f4_ili9341.o 
+./Drivers/DISPLAY/tm_stm32f4_ili9341.o \
+./Drivers/DISPLAY/vu.o 
 
 C_DEPS += \
 ./Drivers/DISPLAY/display.d \
 ./Drivers/DISPLAY/tm_stm32f4_fonts.d \
-./Drivers/DISPLAY/tm_stm32f4_ili9341.d 
+./Drivers/DISPLAY/tm_stm32f4_ili9341.d \
+./Drivers/DISPLAY/vu.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

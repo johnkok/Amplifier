@@ -12,6 +12,6 @@ main.c:680:13:MX_TIM5_Init	32	static
 main.c:723:13:MX_DMA_Init	16	static
 main.c:741:13:MX_GPIO_Init	56	static
 main.c:863:6:HAL_GPIO_EXTI_Callback	16	static
-main.c:893:6:idleTaskEntry	16	static
-main.c:916:6:HAL_TIM_PeriodElapsedCallback	16	static
-main.c:933:6:Error_Handler	4	static,ignoring_inline_asm
+main.c:894:6:idleTaskEntry	16	static
+main.c:917:6:HAL_TIM_PeriodElapsedCallback	16	static
+main.c:934:6:Error_Handler	4	static,ignoring_inline_asm

@@ -20,6 +20,12 @@
 #include "stm32f4xx_hal_gpio.h"
 
 extern SPI_HandleTypeDef hspi1;
+extern const struct {
+  uint32_t   width;
+  uint32_t   height;
+  uint32_t   bytes_per_pixel; /* 2:RGB16, 3:RGB, 4:RGBA */
+  uint8_t 	 pixel_data[];
+} vu_image;
 
 /**
  * @brief  Orientation
@@ -239,14 +245,16 @@ void TM_ILI9341_DisplayOff(void) {
 void TM_ILI9341_SendCommand(uint8_t data) {
 	ILI9341_WRX_RESET;
 	ILI9341_CS_RESET;
-	HAL_SPI_Transmit_DMA(&hspi1, &data, 1);
+	HAL_SPI_Transmit(&hspi1, &data, 1, 5);
+	//HAL_SPI_Transmit_DMA(&hspi1, &data, 1);
 	ILI9341_CS_SET;
 }
 
 void TM_ILI9341_SendData(uint8_t data) {
 	ILI9341_WRX_SET;
 	ILI9341_CS_RESET;
-	HAL_SPI_Transmit_DMA(&hspi1, &data, 1);
+	HAL_SPI_Transmit(&hspi1, &data, 1, 5);
+	//HAL_SPI_Transmit_DMA(&hspi1, &data, 1);
 	ILI9341_CS_SET;
 }
 
@@ -286,15 +294,13 @@ void TM_ILI9341_INT_Fill(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uin
 	/* Calculate pixels count */
 	pixels_count = (x1 - x0) * (y1 - y0);
 
-	if (pixels_count > 1024) {
-		temp = malloc(1024 * sizeof(uint16_t));
+	if (pixels_count > 512) {
+		temp = (uint16_t *)malloc((size_t)(512 * sizeof(uint16_t)));
 		if (!temp) return;
-		for (i=0 ; i < 1024 ; i++) {
-	        temp[i] = color;
-		}
+		memset(temp, color, 512);
 	}
 	else{
-		temp = malloc(pixels_count);
+		temp = (uint16_t *)malloc((size_t)pixels_count);
 		if (!temp) return;
 		for (i=0 ; i < pixels_count ; i++) {
 	        temp[i] = color;
@@ -314,17 +320,18 @@ void TM_ILI9341_INT_Fill(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uin
 	HAL_SPI_Init(&hspi1);
 
 	while (pixels_count) {
-		if (pixels_count > 1024) {
+		if (pixels_count > 512) {
 			ILI9341_CS_RESET;
-			HAL_SPI_Transmit(&hspi1, (uint8_t *)temp, 1024, 5);
-			//HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)temp, 1024);
-			pixels_count -= 1024;
+			//HAL_SPI_Transmit(&hspi1, (uint8_t *)temp, 128, 5);
+			HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)temp, 512);
+			//pixels_count -= 1024;
+			pixels_count -= 512;
 			ILI9341_CS_SET;
 		}
 		else {
 			ILI9341_CS_RESET;
-			HAL_SPI_Transmit(&hspi1, (uint8_t *)temp, pixels_count, 5);
-			//HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)temp, pixels_count);
+			//HAL_SPI_Transmit(&hspi1, (uint8_t *)temp, pixels_count, 5);
+			HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)temp, pixels_count);
 			pixels_count = 0;
 			ILI9341_CS_SET;
 		}
@@ -589,50 +596,20 @@ void TM_ILI9341_DrawFilledCircle(int16_t x0, int16_t y0, int16_t r, uint32_t col
 }
 
 void TM_ILI9341_DrawImage(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uint32_t imgId) {
+    uint32_t i = 0;
 
-	TM_ILI9341_SetCursorPosition(x0, y0, x0+x1-1, y0+y1-1);
+	/* Set cursor position */
+	TM_ILI9341_SetCursorPosition(45, 0, 285-1, 240-1);
 
 	/* Set command for GRAM data */
 	TM_ILI9341_SendCommand(ILI9341_GRAM);
 
-	/* Send everything */
-	ILI9341_WRX_SET;
-
-	hspi1.Init.DataSize = SPI_DATASIZE_16BIT;
-	HAL_SPI_Init(&hspi1);
-	ILI9341_CS_RESET;
-	/*
 	switch(imgId){
-	 	case BAT:
-	 		HAL_SPI_Transmit(&hspi1, &bat, 95*30, 100);
-	 		break;
-	 	case BAT_R:
-	 	    HAL_SPI_Transmit(&hspi1, &bat_red, 26*7, 100);
-	 		break;
-	 	case BAT_O:
-	 	    HAL_SPI_Transmit(&hspi1, &bat_orange, 26*7, 100);
-	 		break;
-	 	case BAT_G:
-	 	    HAL_SPI_Transmit(&hspi1, &bat_green, 26*7, 100);
-	 		break;
-	 	case THERM:
-	 	    HAL_SPI_Transmit(&hspi1, &therm, 90*30, 100);
-	 		break;
-	 	case BON:
-	 	    HAL_SPI_Transmit(&hspi1, &bon, 40*20, 100);
-	 		break;
-	 	case BOFF:
-	 	    HAL_SPI_Transmit(&hspi1, &boff, 40*20, 100);
-	 		break;
-	 	case ERR:
-	 	    HAL_SPI_Transmit(&hspi1, &error, 36*30, 100);
-	 		break;
+	  case 0:
+		for (i = 0; i < vu_image.height * vu_image.width * vu_image.bytes_per_pixel; i = i + 2) {
+			TM_ILI9341_SendData(vu_image.pixel_data[i+1]);
+			TM_ILI9341_SendData(vu_image.pixel_data[i]);
+		}
+	 	break;
 	}
-	*/
-	ILI9341_CS_SET;
-
-	hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
-	HAL_SPI_Init(&hspi1);
-
 }
-

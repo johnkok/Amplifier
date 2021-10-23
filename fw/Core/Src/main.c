@@ -866,17 +866,18 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	  touch_pending = 1;
 	}
 	if (AC_IN_Pin & GPIO_Pin) {
-	  if (state == 2) {
+	  if (state == SS_REQUEST) {
 		HAL_GPIO_WritePin(AC_RES_GPIO_Port, AC_RES_Pin, GPIO_PIN_SET);
 	    state++;
 	  }
-	  if (state == 4) {
+	  if (state == XFR_ON) {
 		HAL_GPIO_WritePin(AC_CTRL_GPIO_Port, AC_CTRL_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(AC_RES_GPIO_Port, AC_RES_Pin, GPIO_PIN_RESET);
 	    state++;
 	  }
-	  if (state == 6) {
+	  if (state == SB_REQUEST) {
 		HAL_GPIO_WritePin(AC_CTRL_GPIO_Port, AC_CTRL_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(AC_RES_GPIO_Port, AC_RES_Pin, GPIO_PIN_RESET);
 	    state++;
 	  }
 	}

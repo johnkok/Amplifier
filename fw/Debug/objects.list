@@ -14,7 +14,7 @@
 "./Drivers/DISPLAY/display.o"
 "./Drivers/DISPLAY/tm_stm32f4_fonts.o"
 "./Drivers/DISPLAY/tm_stm32f4_ili9341.o"
-"./Drivers/DISPLAY/images/bat.o"
+"./Drivers/DISPLAY/vu.o"
 "./Drivers/DS18B20/ds18b20.o"
 "./Drivers/DS18B20/onewire.o"
 "./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o"

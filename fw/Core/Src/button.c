@@ -6,13 +6,47 @@
 
 /* Externals ------------------------------------------------------------------*/
 extern TIM_HandleTypeDef htim3;
-uint8_t state = 0; // STAND-BY
+extern osMessageQueueId_t displayQueueHandle;
+
+uint8_t state = STAND_BY; // STAND-BY
 
 /**
 * @brief Function implementing the buttonTask thread.
 * @param argument: Not used
 * @retval None
 */
+
+void swOnOutputs(void)
+{
+  osDelay(200);
+  HAL_GPIO_WritePin(CH1_OUT_GPIO_Port, CH1_OUT_Pin, GPIO_PIN_SET);
+  osDelay(100);
+  HAL_GPIO_WritePin(CH2_OUT_GPIO_Port, CH2_OUT_Pin, GPIO_PIN_SET);
+  osDelay(100);
+  HAL_GPIO_WritePin(CH3_OUT_GPIO_Port, CH3_OUT_Pin, GPIO_PIN_SET);
+  osDelay(100);
+  HAL_GPIO_WritePin(CH6_OUT_GPIO_Port, CH6_OUT_Pin, GPIO_PIN_SET);
+  osDelay(100);
+  HAL_GPIO_WritePin(CH5_OUT_GPIO_Port, CH5_OUT_Pin, GPIO_PIN_SET);
+  osDelay(100);
+  HAL_GPIO_WritePin(CH4_OUT_GPIO_Port, CH4_OUT_Pin, GPIO_PIN_SET);
+}
+
+void swOffOutputs(void)
+{
+  osDelay(100);
+  HAL_GPIO_WritePin(CH1_OUT_GPIO_Port, CH1_OUT_Pin, GPIO_PIN_RESET);
+  osDelay(100);
+  HAL_GPIO_WritePin(CH2_OUT_GPIO_Port, CH2_OUT_Pin, GPIO_PIN_RESET);
+  osDelay(100);
+  HAL_GPIO_WritePin(CH3_OUT_GPIO_Port, CH3_OUT_Pin, GPIO_PIN_RESET);
+  osDelay(100);
+  HAL_GPIO_WritePin(CH6_OUT_GPIO_Port, CH6_OUT_Pin, GPIO_PIN_RESET);
+  osDelay(100);
+  HAL_GPIO_WritePin(CH5_OUT_GPIO_Port, CH5_OUT_Pin, GPIO_PIN_RESET);
+  osDelay(100);
+  HAL_GPIO_WritePin(CH4_OUT_GPIO_Port, CH4_OUT_Pin, GPIO_PIN_RESET);
+}
 
 void buttonTaskEntry(void *argument)
 {
@@ -38,12 +72,13 @@ void buttonTaskEntry(void *argument)
   uint8_t led_level = 0;
   uint32_t i = 0;
   uint32_t delay_cnt = 0;
+  uint32_t display_event;
 
   for(;;)
   {
 	switch (state){
 	  // LED Blinking - Stand-by
-	  case (0):
+	  case (STAND_BY):
 		led_level++;
 
 	    HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
@@ -61,7 +96,7 @@ void buttonTaskEntry(void *argument)
 		if (HAL_GPIO_ReadPin(PON_GPIO_Port, PON_Pin) == GPIO_PIN_RESET)
 		{
 			osDelay(100);
-            state = 1;
+            state = ON_REQUEST;
 			led_level = 0;
 
 			// Wait for button release
@@ -74,10 +109,12 @@ void buttonTaskEntry(void *argument)
 	    break;
 
 	  // ON requested
-	  case (1):
+	  case (ON_REQUEST):
 	    // Main transformer will be switch on from the zero crossing interrupt based on state
+		display_event = 0x0001;
+		osMessageQueuePut(displayQueueHandle, &display_event, 10, 0);
 	    delay_cnt = 0;
-        state = 2;
+        state = SS_REQUEST;
 
      	HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
      	HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_2);
@@ -88,23 +125,36 @@ void buttonTaskEntry(void *argument)
      	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
      	break;
 
-	  case (3):
+	  case (SS_DELAY):
 	    if (delay_cnt > START_DELAY) {
 	      state++;
+	      swOnOutputs();
+		  display_event = 0x0011;
+	      osMessageQueuePut(displayQueueHandle, &display_event, 10, 0);
+		  display_event = 0x0200;
+	      osMessageQueuePut(displayQueueHandle, &display_event, 10, 0);
+		  display_event = 0x0300;
+	      osMessageQueuePut(displayQueueHandle, &display_event, 10, 0);
+	      break;
 	    }
 		if (HAL_GPIO_ReadPin(PON_GPIO_Port, PON_Pin) == GPIO_PIN_RESET)
 		{
-		  state = 6;
+		  state = SB_REQUEST;
+		  break;
 		}
 	    delay_cnt++;
+	    if ((delay_cnt % 100) == 0) {
+		  display_event = (0x0001 + (delay_cnt / 100));
+	      osMessageQueuePut(displayQueueHandle, &display_event, 10, 0);
+	    }
         break;
 
 	  // ON
-	  case (5):
+	  case (ON):
 	    // Check for off request
 		if (HAL_GPIO_ReadPin(PON_GPIO_Port, PON_Pin) == GPIO_PIN_RESET)
 		{
-		  state = 6;
+		  state++;
 		}
 
 	    // TODO: Monitor system while is ON
@@ -112,8 +162,8 @@ void buttonTaskEntry(void *argument)
 		break;
 
 	  // OFF requested
-	  case (7):
-  	    state = 0;
+	  case (SB_PERFORM):
+		swOffOutputs();
 		// Switch off LED and backlight
 		HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
 		HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_2);
@@ -130,6 +180,10 @@ void buttonTaskEntry(void *argument)
 		  if (HAL_GPIO_ReadPin(PON_GPIO_Port, PON_Pin) == GPIO_PIN_SET) break;
 		}
 
+		display_event = 0x0000;
+		osMessageQueuePut(displayQueueHandle, &display_event, 10, 0);
+
+		state = STAND_BY;
 		break;
 	}
     osDelay(10);
