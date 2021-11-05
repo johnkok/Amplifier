@@ -42,7 +42,9 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-
+#define CODEC_ADD  0x04   //!< AD1937 I2C address
+#define DSP_ADD    0xA2   //!< ADAU1467 I2C address
+#define MEM_ADD    0xA0   //!< I2C EEPROM address
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -83,10 +85,6 @@ void Error_Handler(void);
 #define FAN1_CTRL_GPIO_Port GPIOE
 #define FAN2_CTRL_Pin GPIO_PIN_11
 #define FAN2_CTRL_GPIO_Port GPIOE
-#define CODEC_SCL_Pin GPIO_PIN_10
-#define CODEC_SCL_GPIO_Port GPIOB
-#define CODEC_SDA_Pin GPIO_PIN_11
-#define CODEC_SDA_GPIO_Port GPIOB
 #define TS2_Pin GPIO_PIN_11
 #define TS2_GPIO_Port GPIOD
 #define FAN1_IN_Pin GPIO_PIN_12
@@ -115,10 +113,6 @@ void Error_Handler(void);
 #define LCD_RST_GPIO_Port GPIOD
 #define LCD_DC_Pin GPIO_PIN_7
 #define LCD_DC_GPIO_Port GPIOD
-#define DSP_SCL_Pin GPIO_PIN_6
-#define DSP_SCL_GPIO_Port GPIOB
-#define DSP_SDA_Pin GPIO_PIN_7
-#define DSP_SDA_GPIO_Port GPIOB
 #define CH1_OUT_Pin GPIO_PIN_8
 #define CH1_OUT_GPIO_Port GPIOB
 #define CH2_OUT_Pin GPIO_PIN_9

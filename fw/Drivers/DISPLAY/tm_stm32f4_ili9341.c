@@ -294,10 +294,10 @@ void TM_ILI9341_INT_Fill(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uin
 	/* Calculate pixels count */
 	pixels_count = (x1 - x0) * (y1 - y0);
 
-	if (pixels_count > 512) {
+	if (pixels_count > 128) {
 		temp = (uint16_t *)malloc((size_t)(512 * sizeof(uint16_t)));
 		if (!temp) return;
-		memset(temp, color, 512);
+		memset(temp, color, 128);
 	}
 	else{
 		temp = (uint16_t *)malloc((size_t)pixels_count);
@@ -322,16 +322,16 @@ void TM_ILI9341_INT_Fill(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, uin
 	while (pixels_count) {
 		if (pixels_count > 512) {
 			ILI9341_CS_RESET;
-			//HAL_SPI_Transmit(&hspi1, (uint8_t *)temp, 128, 5);
-			HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)temp, 512);
+			HAL_SPI_Transmit(&hspi1, (uint8_t *)temp, 128, 100);
+			//HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)temp, 512);
 			//pixels_count -= 1024;
-			pixels_count -= 512;
+			pixels_count -= 128;
 			ILI9341_CS_SET;
 		}
 		else {
 			ILI9341_CS_RESET;
-			//HAL_SPI_Transmit(&hspi1, (uint8_t *)temp, pixels_count, 5);
-			HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)temp, pixels_count);
+			HAL_SPI_Transmit(&hspi1, (uint8_t *)temp, pixels_count, 100);
+			//HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)temp, pixels_count);
 			pixels_count = 0;
 			ILI9341_CS_SET;
 		}

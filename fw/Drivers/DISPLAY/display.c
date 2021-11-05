@@ -38,7 +38,7 @@ void displayTaskEntry(void const * argument)
 	TM_ILI9341_Init();
 
 	for(;;)	{
-	   uint32_t data;
+	   uint16_t data;
 
 	   if (osMessageQueueGet (displayQueueHandle, &data, NULL, 0) == osOK) {
            if (data == 0) {  // Power-down
@@ -53,8 +53,7 @@ void displayTaskEntry(void const * argument)
 		   } else if (data == 0x0011) { // power-up ok
 			   TM_ILI9341_DrawImage(40, 0, 280, 240, 0);
 
-			   TM_ILI9341_Puts((X_PIX/2) - 40, (Y_PIX/2) - 15, "Temp:  26.3 C", &TM_Font_7x10, ILI9341_COLOR_WHITE, ILI9341_COLOR_YELLOW3);
-			   TM_ILI9341_Puts((X_PIX/2) - 40, (Y_PIX/2) - 5,  "Fan:   365  RPM", &TM_Font_7x10, ILI9341_COLOR_WHITE, ILI9341_COLOR_YELLOW3);
+			   TM_ILI9341_Puts((X_PIX/2) - 40, (Y_PIX/2) - 5,  "Fan:        RPM", &TM_Font_7x10, ILI9341_COLOR_WHITE, ILI9341_COLOR_YELLOW3);
 			   TM_ILI9341_Puts((X_PIX/2) - 40, (Y_PIX/2) + 5,  "Out:         ", &TM_Font_7x10, ILI9341_COLOR_WHITE, ILI9341_COLOR_YELLOW3);
 			   TM_ILI9341_Puts((X_PIX/2) - 10,  (Y_PIX/2) + 7,  "* * * * * *", &TM_Font_7x10, ILI9341_COLOR_GREEN2, ILI9341_COLOR_YELLOW3);
 
@@ -77,7 +76,13 @@ void displayTaskEntry(void const * argument)
 		   } else if (data < 0x2000) { // Reserved
 
 		   } else if (data < 0x4000) { // Temp L
-
+			   uint16_t temp = data & 0x0FFF;
+			   uint8_t buffer[14];
+//			   if (data & 0x1000) {
+//				   TM_ILI9341_Puts((X_PIX/2) - 10, (Y_PIX/2) - 15, "-", &TM_Font_7x10, ILI9341_COLOR_WHITE, ILI9341_COLOR_YELLOW3);
+//			   }
+			   snprintf(&buffer, 12, "Tem: %2.2d.%1.1d   C", temp/10, temp%10);
+			   TM_ILI9341_Puts((X_PIX/2) - 40, (Y_PIX/2) - 15, buffer, &TM_Font_7x10, ILI9341_COLOR_WHITE, ILI9341_COLOR_YELLOW3);
 		   } else if (data < 0x6000) { // Temp R
 
 		   } else if (data < 0x8000) { // RPM L

@@ -16,6 +16,7 @@ C_SRCS += \
 ../Core/Src/syscalls.c \
 ../Core/Src/sysmem.c \
 ../Core/Src/system_stm32f4xx.c \
+../Core/Src/temp_sensors.c \
 ../Core/Src/touch.c 
 
 OBJS += \
@@ -30,6 +31,7 @@ OBJS += \
 ./Core/Src/syscalls.o \
 ./Core/Src/sysmem.o \
 ./Core/Src/system_stm32f4xx.o \
+./Core/Src/temp_sensors.o \
 ./Core/Src/touch.o 
 
 C_DEPS += \
@@ -44,6 +46,7 @@ C_DEPS += \
 ./Core/Src/syscalls.d \
 ./Core/Src/sysmem.d \
 ./Core/Src/system_stm32f4xx.d \
+./Core/Src/temp_sensors.d \
 ./Core/Src/touch.d 
 
 

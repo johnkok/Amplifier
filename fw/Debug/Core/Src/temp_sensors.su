@@ -1,0 +1,7 @@
+temp_sensors.c:18:6:set_gpio_output	40	static
+temp_sensors.c:29:6:set_gpio_intput	40	static
+temp_sensors.c:40:6:ds_delay	16	static
+temp_sensors.c:46:9:DS18B20_Start	24	static
+temp_sensors.c:63:6:DS18B20_Write	24	static
+temp_sensors.c:83:9:DS18B20_Read	24	static
+temp_sensors.c:103:6:sensorATaskEntry	40	static

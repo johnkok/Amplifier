@@ -7,6 +7,7 @@
 /* Externals ------------------------------------------------------------------*/
 extern TIM_HandleTypeDef htim3;
 extern osMessageQueueId_t displayQueueHandle;
+extern I2C_HandleTypeDef hi2c2;
 
 uint8_t state = STAND_BY; // STAND-BY
 
@@ -15,6 +16,36 @@ uint8_t state = STAND_BY; // STAND-BY
 * @param argument: Not used
 * @retval None
 */
+void startCodec(void)
+{
+	uint8_t buffer[20];
+	uint8_t i,x;
+
+	for (x = 0xFF ; x > 0 ; x--) {
+	    for (i = 6 ; i <= 13 ; i++) {
+		    buffer[i] = x;             // Channel level +0
+		    HAL_I2C_Mem_Write(&hi2c2, CODEC_ADD, i, I2C_MEMADD_SIZE_8BIT, &buffer[i], 1, 10);
+		    osDelay(10);
+	    }
+	}
+
+}
+
+void stopCodec(void)
+{
+	uint8_t buffer[17];
+	uint8_t i;
+
+	HAL_I2C_Mem_Read(&hi2c2, CODEC_ADD, 0, I2C_MEMADD_SIZE_8BIT, buffer, 17, 1000);
+	buffer[0] = buffer[0] | 0x01; // PLL Power-Down
+	buffer[2] = buffer[2] | 0x01; // DAC Power-Down
+	buffer[4] = buffer[4] | 0x01; // mute master
+	buffer[5] = 0xFF;             // Mute all channels
+	for (i = 6 ; i <= 13 ; i++) {
+		buffer[i] = 0xFF;             // Channel level -oo
+	}
+	HAL_I2C_Mem_Write(&hi2c2, CODEC_ADD, 0, I2C_MEMADD_SIZE_8BIT, buffer, 17, 1000);
+}
 
 void swOnOutputs(void)
 {
@@ -25,11 +56,12 @@ void swOnOutputs(void)
   osDelay(100);
   HAL_GPIO_WritePin(CH3_OUT_GPIO_Port, CH3_OUT_Pin, GPIO_PIN_SET);
   osDelay(100);
-  HAL_GPIO_WritePin(CH6_OUT_GPIO_Port, CH6_OUT_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(CH4_OUT_GPIO_Port, CH4_OUT_Pin, GPIO_PIN_SET);
   osDelay(100);
   HAL_GPIO_WritePin(CH5_OUT_GPIO_Port, CH5_OUT_Pin, GPIO_PIN_SET);
   osDelay(100);
-  HAL_GPIO_WritePin(CH4_OUT_GPIO_Port, CH4_OUT_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(CH6_OUT_GPIO_Port, CH6_OUT_Pin, GPIO_PIN_SET);
+  //startCodec();
 }
 
 void swOffOutputs(void)
@@ -41,11 +73,12 @@ void swOffOutputs(void)
   osDelay(100);
   HAL_GPIO_WritePin(CH3_OUT_GPIO_Port, CH3_OUT_Pin, GPIO_PIN_RESET);
   osDelay(100);
-  HAL_GPIO_WritePin(CH6_OUT_GPIO_Port, CH6_OUT_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(CH4_OUT_GPIO_Port, CH4_OUT_Pin, GPIO_PIN_RESET);
   osDelay(100);
   HAL_GPIO_WritePin(CH5_OUT_GPIO_Port, CH5_OUT_Pin, GPIO_PIN_RESET);
   osDelay(100);
-  HAL_GPIO_WritePin(CH4_OUT_GPIO_Port, CH4_OUT_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(CH6_OUT_GPIO_Port, CH6_OUT_Pin, GPIO_PIN_RESET);
+//  stopCodec();
 }
 
 void buttonTaskEntry(void *argument)

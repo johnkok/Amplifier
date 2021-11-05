@@ -1,3 +1,5 @@
-button.c:19:6:swOnOutputs	8	static
-button.c:35:6:swOffOutputs	8	static
-button.c:51:6:buttonTaskEntry	64	static
+button.c:19:6:startCodec	48	static
+button.c:34:6:stopCodec	48	static
+button.c:50:6:swOnOutputs	8	static
+button.c:67:6:swOffOutputs	8	static
+button.c:84:6:buttonTaskEntry	64	static
