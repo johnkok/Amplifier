@@ -18,24 +18,12 @@ void dspTaskEntry(void *argument)
   /* Infinite loop */
   for(;;)
   {
-
-	// DSP heart-beat
-    osDelay(50);
-    buffer[2] = 0;
-    HAL_I2C_Master_Transmit(&hi2c1,  i, &buffer[0], 4, 100);
-    osDelay(50);
-    buffer[3] = 1;
-    HAL_I2C_Master_Transmit(&hi2c1,  i, &buffer[0], 4, 100);
-    i = i + 2;
-/*    osDelay(100);
-
-    osDelay(100);
-    buffer[2] = 0;
-    HAL_I2C_Mem_Write(&hi2c1,  DSP_ADD, DSP_MP14_ADD, I2C_MEMADD_SIZE_16BIT, &buffer[2], 2, 100);
-    osDelay(100);
-    buffer[3] = 1;
-    HAL_I2C_Mem_Write(&hi2c1,  DSP_ADD, DSP_MP14_ADD, I2C_MEMADD_SIZE_16BIT, &buffer[2], 2, 100);
-    osDelay(100);
-*/
+	  // DSP heart-beat
+	  osDelay(250);
+	  buffer[3] = 0;
+	  HAL_I2C_Mem_Write(&hi2c1,  DSP_ADD, DSP_MP14_ADD, I2C_MEMADD_SIZE_16BIT, &buffer[2], 2, 100);
+	  osDelay(250);
+	  buffer[3] = 1;
+	  HAL_I2C_Mem_Write(&hi2c1,  DSP_ADD, DSP_MP14_ADD, I2C_MEMADD_SIZE_16BIT, &buffer[2], 2, 100);
   }
 }

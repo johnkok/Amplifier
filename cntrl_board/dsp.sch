@@ -100,8 +100,6 @@ SB_MISO
 Text Label 4650 3500 0    50   ~ 0
 SB_SCK
 Wire Wire Line
-	5050 3800 4650 3800
-Wire Wire Line
 	8850 3100 8450 3100
 Wire Wire Line
 	5050 3500 4650 3500
@@ -264,18 +262,12 @@ Wire Wire Line
 Connection ~ 13450 2000
 Wire Wire Line
 	13450 2000 13450 2100
-Text HLabel 4450 3900 0    50   Input ~ 0
+Text HLabel 3750 3900 0    50   Input ~ 0
 SDA
-Text HLabel 4450 3600 0    50   Input ~ 0
+Text HLabel 3750 3600 0    50   Input ~ 0
 SCL
-Wire Wire Line
-	5050 3600 4450 3600
-Wire Wire Line
-	5050 3900 4450 3900
-Text HLabel 4450 3400 0    50   Input ~ 0
+Text HLabel 3750 3400 0    50   Input ~ 0
 nRST
-Wire Wire Line
-	4450 3400 5050 3400
 $Comp
 L Device:R R10
 U 1 1 60C6D943
@@ -583,12 +575,8 @@ Wire Wire Line
 	14500 9000 14900 9000
 Text Label 14900 9000 2    50   ~ 0
 nRST
-Wire Wire Line
-	5050 3200 4650 3200
 Text Label 4650 3200 0    50   ~ 0
 MISO_M
-Wire Wire Line
-	5050 3700 4650 3700
 Text Label 4650 3700 0    50   ~ 0
 SCLK_M
 Wire Wire Line
@@ -1884,7 +1872,7 @@ U 1 1 614731D0
 P 12950 2800
 F 0 "NT1" V 12996 2756 50  0000 R CNN
 F 1 "NT1" V 12905 2756 50  0000 R CNN
-F 2 "" H 12950 2800 50  0001 C CNN
+F 2 "NetTie:NetTie-2_SMD_Pad0.5mm" H 12950 2800 50  0001 C CNN
 F 3 "~" H 12950 2800 50  0001 C CNN
 	1    12950 2800
 	0    -1   -1   0   
@@ -1919,4 +1907,82 @@ Wire Wire Line
 	12950 3500 13450 3500
 Wire Wire Line
 	12950 3400 12950 3500
+$Comp
+L Device:R R157
+U 1 1 618C71A7
+P 4000 3600
+F 0 "R157" V 3950 3400 50  0000 C CNN
+F 1 "DNP" V 4000 3600 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" V 3930 3600 50  0001 C CNN
+F 3 "~" H 4000 3600 50  0001 C CNN
+	1    4000 3600
+	0    -1   1    0   
+$EndComp
+$Comp
+L Device:R R167
+U 1 1 618DFC9C
+P 4000 3700
+F 0 "R167" V 3950 3500 50  0000 C CNN
+F 1 "0R" V 4000 3700 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" V 3930 3700 50  0001 C CNN
+F 3 "~" H 4000 3700 50  0001 C CNN
+	1    4000 3700
+	0    -1   1    0   
+$EndComp
+$Comp
+L Device:R R169
+U 1 1 618F87FD
+P 4000 3900
+F 0 "R169" V 3950 3700 50  0000 C CNN
+F 1 "DNP" V 4000 3900 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" V 3930 3900 50  0001 C CNN
+F 3 "~" H 4000 3900 50  0001 C CNN
+	1    4000 3900
+	0    -1   1    0   
+$EndComp
+$Comp
+L Device:R R168
+U 1 1 61911366
+P 4000 3800
+F 0 "R168" V 3950 3600 50  0000 C CNN
+F 1 "0R" V 4000 3800 50  0000 C CNN
+F 2 "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder" V 3930 3800 50  0001 C CNN
+F 3 "~" H 4000 3800 50  0001 C CNN
+	1    4000 3800
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	3850 3600 3800 3600
+Wire Wire Line
+	3850 3700 3800 3700
+Wire Wire Line
+	3800 3700 3800 3600
+Connection ~ 3800 3600
+Wire Wire Line
+	3800 3600 3750 3600
+Wire Wire Line
+	3750 3900 3800 3900
+Wire Wire Line
+	3850 3800 3800 3800
+Wire Wire Line
+	3800 3800 3800 3900
+Connection ~ 3800 3900
+Wire Wire Line
+	3800 3900 3850 3900
+Wire Wire Line
+	5050 3900 4150 3900
+Wire Wire Line
+	5050 3600 4150 3600
+Wire Wire Line
+	4150 3700 5050 3700
+Wire Wire Line
+	5050 3800 4650 3800
+Wire Wire Line
+	4150 3800 4550 3800
+Wire Wire Line
+	4550 3800 4550 3200
+Wire Wire Line
+	4550 3200 5050 3200
+Wire Wire Line
+	3750 3400 5050 3400
 $EndSCHEMATC

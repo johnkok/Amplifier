@@ -112,6 +112,11 @@ osMessageQueueId_t displayQueueHandle;
 const osMessageQueueAttr_t displayQueue_attributes = {
   .name = "displayQueue"
 };
+/* Definitions for fanQueue */
+osMessageQueueId_t fanQueueHandle;
+const osMessageQueueAttr_t fanQueue_attributes = {
+  .name = "fanQueue"
+};
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -203,7 +208,10 @@ int main(void)
 
   /* Create the queue(s) */
   /* creation of displayQueue */
-  displayQueueHandle = osMessageQueueNew (16, sizeof(uint32_t), &displayQueue_attributes);
+  displayQueueHandle = osMessageQueueNew (16, sizeof(uint16_t), &displayQueue_attributes);
+
+  /* creation of fanQueue */
+  fanQueueHandle = osMessageQueueNew (16, sizeof(uint16_t), &fanQueue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -389,7 +397,7 @@ static void MX_SPI1_Init(void)
   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;
   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;

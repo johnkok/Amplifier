@@ -44,3 +44,5 @@
 *.idb
 *.pdb
 
+# bakup files
+*-bak

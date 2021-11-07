@@ -2,6 +2,7 @@
 #include "cmsis_os.h"
 
 extern TIM_HandleTypeDef htim1;
+extern osMessageQueueId_t fanQueueHandle;
 
 void fanTaskEntry(void *argument)
 {
@@ -10,7 +11,7 @@ void fanTaskEntry(void *argument)
 
   // Set FAN Low
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 670*9;
+  sConfigOC.Pulse = 670*10;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
@@ -24,19 +25,39 @@ void fanTaskEntry(void *argument)
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
 
   /* Infinite loop */
-  for(;;)
-  {
-    //Read temperature A
-	//Read temperature B
-	//Set FAN A speed
-	//Set Fan B speed
+  for(;;){
+	  uint16_t data;
 
-	osDelay(1000);
+	  if (osMessageQueueGet (fanQueueHandle, &data, NULL, 0) == osOK) {
+		  if (data < 0x2000) { // Reserved
 
-	// Check FAN A speed
+		  } else if (data < 0x4000) { // Temp L
+			  uint16_t temp = (data & 0x0FFF) / 10;
+			  if (temp < 40) {
+				  sConfigOC.Pulse = 670 * 5;
+			  }else if (temp < 50) {
+				  sConfigOC.Pulse = 670 * 6;
+			  }else if (temp < 60) {
+				  sConfigOC.Pulse = 670 * 7;
+			  }else if (temp < 70) {
+				  sConfigOC.Pulse = 670 * 8;
+			  }else if (temp < 80) {
+				  sConfigOC.Pulse = 670 * 9;
+			  }else {
+				  sConfigOC.Pulse = 669 * 10;
+			  }
 
-	// Check FAN B speed
+			  HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+			  HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1);
+			  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 
-	osDelay(1000);
+			  HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_2);
+			  HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2);
+			  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+		  } else if (data < 0x6000) { // Temp R
+
+		  }
+	  }
+
   }
 }

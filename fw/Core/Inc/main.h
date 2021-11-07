@@ -43,7 +43,7 @@ extern "C" {
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
 #define CODEC_ADD  0x04   //!< AD1937 I2C address
-#define DSP_ADD    0xA2   //!< ADAU1467 I2C address
+#define DSP_ADD    0x76   //!< ADAU1467 I2C address
 #define MEM_ADD    0xA0   //!< I2C EEPROM address
 /* USER CODE END EC */
 

@@ -4,6 +4,7 @@
 #include "main.h"
 
 extern osMessageQueueId_t displayQueueHandle;
+extern osMessageQueueId_t fanQueueHandle;
 extern TIM_HandleTypeDef htim5;
 
 // Left sensor
@@ -40,6 +41,22 @@ void set_gpio_intput(uint32_t pin) {
 void ds_delay (uint32_t us) {
     __HAL_TIM_SET_COUNTER(&htim5,0);
     while ((__HAL_TIM_GET_COUNTER(&htim5))<us);
+}
+
+uint8_t ds_crc8(const unsigned char * data, const uint32_t size)
+{
+    uint8_t crc = 0;
+    for (uint32_t i = 0; i < size; ++i)
+    {
+        uint8_t inbyte = data[i];
+        for (uint8_t j = 0; j < 8; ++j) {
+        	uint8_t mix = (crc ^ inbyte) & 0x01;
+            crc >>= 1;
+            if (mix) crc ^= 0x8C;
+            inbyte >>= 1;
+        }
+    }
+    return crc;
 }
 
 // send start command
@@ -103,19 +120,17 @@ uint8_t DS18B20_Read(uint32_t pin) {
 void sensorATaskEntry(void const * argument) {
 	uint16_t display_event;
 	uint8_t buffer[9];
-	uint8_t presence;
-
-	int i;
+	int32_t i;
 
 	for(;;) {
 		HAL_TIM_Base_Start(&htim5);
-		presence = DS18B20_Start(DS18B20_L_PIN);
+		DS18B20_Start(DS18B20_L_PIN);
 		HAL_Delay(1);
 		DS18B20_Write(DS18B20_L_PIN, 0xCC);  // skip ROM
 		DS18B20_Write(DS18B20_L_PIN, 0x44);  // convert t
 		HAL_Delay (800);
 
-		presence = DS18B20_Start(DS18B20_L_PIN);
+		DS18B20_Start(DS18B20_L_PIN);
 		HAL_Delay(1);
 		DS18B20_Write(DS18B20_L_PIN, 0xCC);  // skip ROM
 		DS18B20_Write(DS18B20_L_PIN, 0xBE);  // Read Scratch-pad
@@ -125,15 +140,18 @@ void sensorATaskEntry(void const * argument) {
 		}
 
         //Check CRC
+//		if (ds_crc8(&buffer, 7) == buffer[8]) {
+			// send data
+			display_event = 10*(((buffer[0] & 0xF0) >> 4) + ((buffer[1] & 0x07) << 4));
+			display_event = display_event + (10 * (buffer[0] & 0x0F)) / 16;
+			display_event |= 0x2000;
+//			if (buffer[1] > 0x07) {
+//				display_event |= 0x1000;
+//			}
+			osMessageQueuePut(displayQueueHandle, &display_event, 10, 0);
+			osMessageQueuePut(fanQueueHandle, &display_event, 10, 0);
 
-		// send data
-		display_event = 10*(((buffer[0] & 0xF0) >> 4) + ((buffer[1] & 0x07) << 4));
-		display_event = display_event + (10 * (buffer[0] & 0x0F)) / 16;
-		display_event |= 0x2000;
-		if (buffer[1] > 0x07) {
-			display_event |= 0x1000;
-		}
-		osMessageQueuePut(displayQueueHandle, &display_event, 10, 0);
+//		}
 
 		osDelay(2000);
 	}

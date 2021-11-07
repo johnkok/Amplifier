@@ -6,6 +6,7 @@
 #include "tm_stm32f4_fonts.h"
 
 extern osMessageQueueId_t displayQueueHandle;
+extern const uint8_t state;
 
 osEvent event;
 #define BAT_1_X_OFFSET 16
@@ -75,7 +76,7 @@ void displayTaskEntry(void const * argument)
 
 		   } else if (data < 0x2000) { // Reserved
 
-		   } else if (data < 0x4000) { // Temp L
+		   } else if ((data < 0x4000) && (state == ON)) { // Temp L
 			   uint16_t temp = data & 0x0FFF;
 			   uint8_t buffer[14];
 //			   if (data & 0x1000) {
